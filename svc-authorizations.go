@@ -86,7 +86,7 @@ func (s *AuthorizationsService) InitAuthorizations(authorizationHost string, tra
 	return connect
 }
 
-func (s *AuthorizationsService) getAuthorizations(ctx context.Context, usr *users_grpc.User) (*Authorizations, error) {
+func (s *AuthorizationsService) GetAuthorizations(ctx context.Context, usr *users_grpc.User) (*Authorizations, error) {
 	for i := 1; i <= 5; i++ {
 		md, ok := metadata.FromOutgoingContext(ctx)
 		if !ok {
