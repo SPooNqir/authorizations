@@ -1,7 +1,3 @@
-*.pb.gw.go
-*.pb.go
-swagger/*.json
-v1
 proto/groups.proto
 proto/users.proto
 groups
