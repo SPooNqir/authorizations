@@ -22,7 +22,7 @@ import (
 
 type AuthorizationsService struct {
 	Authsconn *grpc.ClientConn
-	Authssvc  AuthorizationClient
+	Authssvc  AuthorizationsClient
 	Authsreco chan bool
 
 	Id *lib.Identity
@@ -70,7 +70,7 @@ func (s *AuthorizationsService) InitAuthorizations(authorizationHost string, tra
 						logger.Fatalf("did not connect: %v, try : %d - sleep 5s", err, i)
 						time.Sleep(2 * time.Second)
 					} else {
-						s.Authssvc = NewAuthorizationClient(s.Authsconn)
+						s.Authssvc = NewAuthorizationsClient(s.Authsconn)
 						break
 					}
 				}
@@ -86,7 +86,7 @@ func (s *AuthorizationsService) InitAuthorizations(authorizationHost string, tra
 	return connect
 }
 
-func (s *AuthorizationsService) getAuthorizations(ctx context.Context, usr *users_grpc.User) (*Authorization, error) {
+func (s *AuthorizationsService) getAuthorizations(ctx context.Context, usr *users_grpc.User) (*Authorizations, error) {
 	for i := 1; i <= 5; i++ {
 		md, ok := metadata.FromOutgoingContext(ctx)
 		if !ok {
