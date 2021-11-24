@@ -1,0 +1,1342 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Spoon - Authorizations WS",
+    "version": "0.0.1",
+    "contact": {
+      "name": "Spoon Cloud Team",
+      "url": "https://gitlab.com/SpoonQIR/Cloud/services/authorizations",
+      "email": "sebastien.lavayssiere@spoon.ai"
+    }
+  },
+  "tags": [
+    {
+      "name": "authorizations"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/authorizations": {
+      "post": {
+        "operationId": "authorizations_Add",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsAuthorization"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authorizationsAuthorization"
+            }
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/description": {
+      "get": {
+        "operationId": "authorizations_GetDescriptions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsIAMDescription"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/email/{email}": {
+      "get": {
+        "operationId": "authorizations_Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsAuthorizations"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "email",
+            "description": "@inject_tag: gorm:\"unique;not null;index:email\"",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "givenName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "familyName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "job",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mobile",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "prefContactWay",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paths",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nickname",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "langue",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "birthday",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/email/{email}/group/{groupid}": {
+      "delete": {
+        "operationId": "authorizations_Remove",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsAuthorization"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "email",
+            "description": "@inject_tag: gorm:\"index:email\"",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "groupid",
+            "description": "@inject_tag: gorm:\"index:groupid\"",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "id",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "roleid",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "auth",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/roles": {
+      "get": {
+        "operationId": "authorizations_GetAllRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRoles"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "max",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      },
+      "delete": {
+        "operationId": "authorizations_RemoveRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "authorizations",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      },
+      "post": {
+        "operationId": "authorizations_AddRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/roles/email/{email}/group/{groupid}": {
+      "get": {
+        "operationId": "authorizations_GetRoleForEmail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "groupid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/roles/id/{id}": {
+      "get": {
+        "operationId": "authorizations_GetRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "@inject_tag: gorm:\"-\"",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "authorizations",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      },
+      "patch": {
+        "operationId": "authorizations_UpdateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "@inject_tag: gorm:\"-\"",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "authorizations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "@inject_tag: gorm:\"-\""
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/roles/id/{roleid}/auth/{auth}": {
+      "delete": {
+        "operationId": "authorizations_RemoveAuthorizationToRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "roleid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "auth",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      },
+      "put": {
+        "operationId": "authorizations_AddAuthorizationToRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsRole"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "roleid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "auth",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/superusers": {
+      "get": {
+        "operationId": "authorizations_GetSuperUsers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/usersUsers"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "authorizations"
+        ]
+      },
+      "post": {
+        "operationId": "authorizations_AddSuperUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsAuthorizations"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/usersUser"
+            }
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    },
+    "/v1/authorizations/superusers/{email}": {
+      "delete": {
+        "operationId": "authorizations_RemoveSuperUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationsAuthorizations"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "418": {
+            "description": "I'm a teapot.",
+            "schema": {
+              "$ref": ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "email",
+            "description": "@inject_tag: gorm:\"unique;not null;index:email\"",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "givenName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "familyName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "job",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mobile",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "prefContactWay",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paths",
+            "description": "@inject_tag: gorm:\"-\".",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nickname",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "langue",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "birthday",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "authorizations"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "authorizationsAuthorization": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "email": {
+          "type": "string",
+          "title": "@inject_tag: gorm:\"index:email\""
+        },
+        "roleid": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "groupid": {
+          "type": "string",
+          "format": "uint64",
+          "title": "@inject_tag: gorm:\"index:groupid\""
+        },
+        "auth": {
+          "type": "string",
+          "title": "@inject_tag: gorm:\"-\""
+        }
+      }
+    },
+    "authorizationsAuthorizations": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/authorizationsAuthorization"
+          }
+        },
+        "limit": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "offset": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "max": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "authorizationsIAMDescription": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/authorizationsService"
+          },
+          "title": "@inject_tag: yaml:\"services\""
+        }
+      }
+    },
+    "authorizationsMethod": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: yaml:\"name\""
+        },
+        "description": {
+          "type": "string",
+          "title": "@inject_tag: yaml:\"description\""
+        }
+      }
+    },
+    "authorizationsMicroservices": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: yaml:\"name\""
+        },
+        "path": {
+          "type": "string",
+          "title": "@inject_tag: yaml:\"path\""
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/authorizationsMethod"
+          },
+          "title": "@inject_tag: yaml:\"methods\""
+        },
+        "namespace": {
+          "type": "string",
+          "title": "@inject_tag: yaml:\"namespace\""
+        },
+        "port": {
+          "type": "string",
+          "title": "@inject_tag: yaml:\"port\""
+        }
+      }
+    },
+    "authorizationsRole": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "authorizations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "@inject_tag: gorm:\"-\""
+        }
+      }
+    },
+    "authorizationsRoles": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/authorizationsRole"
+          }
+        },
+        "limit": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "offset": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "max": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "authorizationsService": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: yaml:\"name\""
+        },
+        "micros": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/authorizationsMicroservices"
+          },
+          "title": "@inject_tag: yaml:\"microservices\""
+        }
+      }
+    },
+    "groupsGroup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: gorm:\"unique;not null\""
+        },
+        "label": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "parents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/groupsGroup"
+          },
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/groupsGroup"
+          },
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "composed": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          },
+          "title": "@inject_tag: gorm:\"-\""
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "usersUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "email": {
+          "type": "string",
+          "title": "@inject_tag: gorm:\"unique;not null;index:email\""
+        },
+        "givenName": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        },
+        "job": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "prefContactWay": {
+          "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/groupsGroup"
+          },
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "@inject_tag: gorm:\"-\""
+        },
+        "location": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "langue": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "usersUsers": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/usersUser"
+          }
+        },
+        "limit": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "offset": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "max": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "externalDocs": {
+    "description": "link for docs",
+    "url": "https://gitlab.com/SpoonQIR/Cloud/services/authorizations"
+  }
+}

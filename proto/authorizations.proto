@@ -1,0 +1,252 @@
+syntax = "proto3";
+
+package authorizations;
+
+option go_package = "github.com/slavayssiere-spoon/authorizations";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "users.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "Spoon - Authorizations WS";
+		version: "0.0.1";
+		contact: {
+			name: "Spoon Cloud Team";
+			url: "https://gitlab.com/SpoonQIR/Cloud/services/authorizations";
+			email: "sebastien.lavayssiere@spoon.ai";
+		};
+	};
+	// Overwriting host entry breaks tests, so this is not done here.
+	external_docs: {
+		url: "https://gitlab.com/SpoonQIR/Cloud/services/authorizations";
+		description: "link for docs";
+	}
+	schemes: HTTPS;
+	schemes: HTTP;
+	consumes: "application/json";
+	produces: "application/json";
+	security_definitions: {
+		security: {
+			key: "ApiKeyAuth";
+			value: {
+				type: TYPE_API_KEY;
+				in: IN_HEADER;
+				name: "Authorization";
+			}
+		}
+	}
+	security: {
+		security_requirement: {
+			key: "ApiKeyAuth";
+			value: {};
+		}
+	}
+	responses: {
+		key: "403";
+		value: {
+			description: "Returned when the user does not have permission to access the resource.";
+		}
+	}
+	responses: {
+		key: "404";
+		value: {
+			description: "Returned when the resource does not exist.";
+			schema: {
+				json_schema: {
+					type: STRING;
+				}
+			}
+		}
+	}
+	responses: {
+		key: "418";
+		value: {
+			description: "I'm a teapot.";
+			schema: {
+				json_schema: {
+					ref: ".grpc.gateway.examples.internal.proto.examplepb.NumericEnum";
+				}
+			}
+		}
+	}
+};
+
+message Authorization {
+	// @inject_tag: gorm:"-"
+	uint64 id = 1;
+
+	// @inject_tag: gorm:"index:email"
+	string email = 2;
+	uint64 roleid = 3;
+	// @inject_tag: gorm:"index:groupid"
+	uint64 groupid = 4;
+	// @inject_tag: gorm:"-"
+	string auth = 5;
+}
+
+message Authorizations {
+	repeated Authorization list = 1;
+	uint64 limit = 2;
+	uint64 offset = 3;
+	uint64 max = 4;
+}
+
+message Role {
+	// @inject_tag: gorm:"-"
+	uint64 id = 1;
+
+	string name = 2;
+	string description = 3;
+	// @inject_tag: gorm:"-"
+	repeated string authorizations = 4;
+}
+
+
+message Roles {
+	repeated Role list = 1;
+	uint64 limit = 2;
+	uint64 offset = 3;
+	uint64 max = 4;
+}
+
+
+message AuthRole {
+	uint64 roleid = 1;
+	string auth = 2;
+}
+
+message Method {
+	// @inject_tag: yaml:"name"
+	string name = 1;
+	// @inject_tag: yaml:"description"
+	string description = 2;
+}
+
+message Microservices {
+	// @inject_tag: yaml:"name"
+	string name = 1;
+	// @inject_tag: yaml:"path"
+	string path = 2;
+	// @inject_tag: yaml:"methods"
+	repeated Method methods = 3;
+	// @inject_tag: yaml:"namespace"
+	string namespace = 4;
+	// @inject_tag: yaml:"port"
+	string port = 5;
+}
+
+message Service {
+	// @inject_tag: yaml:"name"
+	string name = 1;
+	// @inject_tag: yaml:"microservices"
+	repeated Microservices micros = 2;
+}
+
+message IAMDescription {
+	// @inject_tag: yaml:"services"
+	repeated Service services = 1;
+}
+
+message UserGroup {
+	string email = 1;
+	uint64 groupid = 2;
+}
+
+service authorizations {
+	rpc Get (users.User) returns (Authorizations) {
+		option (google.api.http) = {
+			get: "/v1/authorizations/email/{email}"
+		};
+	}
+
+	rpc GetDescriptions (google.protobuf.Empty) returns (IAMDescription) {
+		option (google.api.http) = {
+			get: "/v1/authorizations/description"
+		};
+	}
+
+	rpc Add (Authorization) returns (Authorization) {
+		option (google.api.http) = {
+			post: "/v1/authorizations"
+			body: "*"
+		};
+	}
+
+	rpc Remove (Authorization) returns (Authorization) {
+		option (google.api.http) = {
+			delete: "/v1/authorizations/email/{email}/group/{groupid}"
+		};
+	}
+
+	rpc AddSuperUser (users.User) returns (Authorizations) {
+		option (google.api.http) = {
+			post: "/v1/authorizations/superusers"
+			body: "*"
+		};
+	}
+
+	rpc RemoveSuperUser (users.User) returns (Authorizations) {
+		option (google.api.http) = {
+			delete: "/v1/authorizations/superusers/{email}"
+		};
+	}
+
+	rpc GetSuperUsers (google.protobuf.Empty) returns (users.Users) {
+		option (google.api.http) = {
+			get: "/v1/authorizations/superusers"
+		};
+	}
+
+	rpc AddRole (Role) returns (Role) {
+		option (google.api.http) = {
+			post: "/v1/authorizations/roles"
+			body: "*"
+		};
+	}
+
+	rpc RemoveRole (Role) returns (Role) {
+		option (google.api.http) = {
+			delete: "/v1/authorizations/roles"
+		};
+	}
+
+	rpc GetRole (Role) returns (Role) {
+		option (google.api.http) = {
+			get: "/v1/authorizations/roles/id/{id}"
+		};
+	}
+
+	rpc GetRoleForEmail (UserGroup) returns (Role) {
+		option (google.api.http) = {
+			get: "/v1/authorizations/roles/email/{email}/group/{groupid}"
+		};
+	}
+
+	rpc UpdateRole (Role) returns (Role) {
+		option (google.api.http) = {
+			patch: "/v1/authorizations/roles/id/{id}"
+			body: "*"
+		};
+	}
+
+	rpc GetAllRoles (Roles) returns (Roles) {
+		option (google.api.http) = {
+			get: "/v1/authorizations/roles"
+		};
+	}
+
+	rpc AddAuthorizationToRole (AuthRole) returns (Role) {
+		option (google.api.http) = {
+			put: "/v1/authorizations/roles/id/{roleid}/auth/{auth}"
+		};
+	}
+
+	rpc RemoveAuthorizationToRole (AuthRole) returns (Role) {
+		option (google.api.http) = {
+			delete: "/v1/authorizations/roles/id/{roleid}/auth/{auth}"
+		};
+	}
+}
