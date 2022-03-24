@@ -4,7 +4,7 @@ package authorizations
 
 import (
 	context "context"
-	users "github.com/slavayssiere-spoon/users"
+	users "github.com/SPooNqir/users"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

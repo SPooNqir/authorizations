@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	users_grpc "github.com/slavayssiere-spoon/users"
+	users_grpc "github.com/SPooNqir/users"
 	lib "gitlab.com/SpoonQIR/Cloud/library/golang-common.git"
 )
 

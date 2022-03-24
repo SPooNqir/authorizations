@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package authorizations;
 
-option go_package = "github.com/slavayssiere-spoon/authorizations";
+option go_package = "github.com/SPooNqir/authorizations";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";

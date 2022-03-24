@@ -3,10 +3,10 @@
 set -e
 
 GROUPS_VERSION="master"
-curl -o proto/groups.proto "https://raw.githubusercontent.com/slavayssiere-spoon/groups/$GROUPS_VERSION/proto/groups.proto"
+curl -o proto/groups.proto "https://raw.githubusercontent.com/SPooNqir/groups/$GROUPS_VERSION/proto/groups.proto"
 
 USERS_VERSION="master"
-curl -o proto/users.proto "https://raw.githubusercontent.com/slavayssiere-spoon/users/$USERS_VERSION/proto/users.proto"
+curl -o proto/users.proto "https://raw.githubusercontent.com/SPooNqir/users/$USERS_VERSION/proto/users.proto"
 
 GEN_PATH="."
 GO_LIB_PATH=$(go env GOPATH)/src
